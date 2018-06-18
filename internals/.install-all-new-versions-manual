@@ -1,0 +1,5 @@
+yarn add babel-plugin-transform-async-to-generator babel-plugin-transform-decorators-legacy babel-preset-react babel-preset-stage-0 css-loader extract-text-webpack-plugin file-loader mobx mobx-react mobx-react-devtools plop prop-types react react-dom react-router-dom style-loader styled-components babel-core babel-loader babel-preset-es2015 html-webpack-plugin webpack webpack-dev-server
+
+Modern ES6: use preset es2016
+
+yarn add babel-plugin-transform-async-to-generator babel-plugin-transform-decorators-legacy babel-preset-react babel-preset-stage-0 css-loader extract-text-webpack-plugin file-loader mobx mobx-react mobx-react-devtools plop prop-types react react-dom react-router-dom style-loader styled-components babel-core babel-loader html-webpack-plugin webpack webpack-dev-server babel-preset-es2017
