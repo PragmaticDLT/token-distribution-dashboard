@@ -1,7 +1,7 @@
-import BuzzDistributionAPI from "./BuzzDistributionAPI";
+import TokenDistributionAPI from "./TokenDistributionAPI";
 import Web3API from "./Web3API";
 
 export {
-  BuzzDistributionAPI,
+  TokenDistributionAPI,
   Web3API
 };

@@ -1,13 +1,13 @@
-import {BuzzDistributionAPI, Web3API} from "apis";
+import {TokenDistributionAPI, Web3API} from "apis";
 import {action, observable, runInAction} from "mobx";
 
 class UserDataStore {
   @observable balance = 0;
   @observable account = null;
 
-  constructor(Web3API, BuzzDistributionAPI) {
+  constructor(Web3API, TokenDistributionAPI) {
     this.web3API = Web3API;
-    this.buzzDistributionAPI = BuzzDistributionAPI;
+    this.tokenDistributionAPI = TokenDistributionAPI;
     this.account = this.web3API.getCurrentAccount();
     this.setupMetaMaskCheckTimer();
   }
@@ -26,10 +26,11 @@ class UserDataStore {
   @action
   loadBalance = async () => {
     if (this.account) {
-      const balance = await this.buzzDistributionAPI.fetchBalanceOf(this.account);
+      const balance = await this.tokenDistributionAPI.fetchBalanceOf(this.account);
+
       runInAction(() => this.balance = balance.toString());
     }
   };
 }
 
-export default new UserDataStore(Web3API, BuzzDistributionAPI);
+export default new UserDataStore(Web3API, TokenDistributionAPI);

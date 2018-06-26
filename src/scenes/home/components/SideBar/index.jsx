@@ -26,12 +26,13 @@ export default class SideBar extends React.Component {
     const TokenStore = this.props.TokenStore;
     const UserDataStore = this.props.UserDataStore;
 
-    if (this.amount.value >= 0.001)
-      TokenStore.purchaseTokens(this.amount.value).then(() => {
+    if (this.amount.value >= 0.001) {
+      TokenStore.purchaseTokens(this.amount.value, UserDataStore.account).then(() => {
         TokenStore.loadTotalSupply();
-        UserDataStore.loadBalance(TokenStore.account);
+        UserDataStore.loadBalance();
         this.amount.value = null;
-      }).catch((e) => console.log('Failed: ', e));
+      }).catch(error => console.error('Failed to buy tokens: ', error));
+    }
   };
 
   withdrawOnEnter = event => {
@@ -41,13 +42,15 @@ export default class SideBar extends React.Component {
   withdraw = () => {
     const TokenStore = this.props.TokenStore;
     const UserDataStore = this.props.UserDataStore;
+
     if (this.withdrawAmount.value >= 1 && this.withdrawAddress.value)
-      TokenStore.transferTokens(this.withdrawAddress.value, this.withdrawAmount.value).then(() => {
+      TokenStore.transferTokens(this.withdrawAddress.value, this.withdrawAmount.value, UserDataStore.account).then(() => {
         TokenStore.loadTotalSupply();
-        UserDataStore.loadBalance(TokenStore.account);
+        UserDataStore.loadBalance();
+
         this.withdrawAmount.value = null;
         this.withdrawAddress.value = null;
-      }).catch((e) => console.log('Failed: ', e));
+      }).catch(error => console.error('Failed to withdraw tokens: ', error));
   };
 
   renderTransferSection() {
@@ -95,7 +98,6 @@ export default class SideBar extends React.Component {
 
   render() {
     const isNavOpen = this.state.open;
-    const TokenStore = this.props.TokenStore;
     const UserDataStore = this.props.UserDataStore;
     return (
       <div>
