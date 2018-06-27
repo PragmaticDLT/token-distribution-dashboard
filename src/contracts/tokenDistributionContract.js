@@ -1,13 +1,16 @@
-import contract from "truffle-contract";
-import Web3 from "web3";
+'use strict';
 
-import config from "config";
+import contract from 'truffle-contract';
+import Web3 from 'web3';
+
+import config from 'config';
 
 // TODO Find better artifacts deploying solution
-import tokenDistributionContractArtifact from "../../../token-distribution-contract/build/contracts/TokenDistribution.json";
-import addresses from "../../../token-distribution-contract/build/addresses.json";
+import tokenDistributionContractArtifact
+  from '../../../token-distribution-contract/build/contracts/TokenDistribution.json';
+import addresses from '../../../token-distribution-contract/build/addresses.json';
 
-const { tokenDistributionContractAddress } = addresses;
+const {tokenDistributionContractAddress} = addresses;
 
 export default function getTokenDistributionContractInstance() {
   const tokenDistributionContract = contract(tokenDistributionContractArtifact);
@@ -16,4 +19,4 @@ export default function getTokenDistributionContractInstance() {
   return tokenDistributionContract.at(tokenDistributionContractAddress);
 }
 
-export { tokenDistributionContractAddress };
+export {tokenDistributionContractAddress};

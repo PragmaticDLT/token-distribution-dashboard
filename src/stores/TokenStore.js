@@ -1,15 +1,15 @@
-import {action, observable, runInAction} from "mobx";
+import {action, observable, runInAction} from 'mobx';
 
-import { TokenDistributionAPI } from "apis";
+import {TokenDistributionAPI} from 'apis';
 
 class TokenStore {
   @observable totalSupply = 0;
-  @observable symbol = "";
-  @observable name = "";
+  @observable symbol = '';
+  @observable name = '';
   @observable endDate = null;
 
-  @observable approvalEvents = [];
   @observable transferEvents = [];
+  @observable approvalEvents = [];
 
   @observable contractAddress = null;
 
@@ -18,21 +18,35 @@ class TokenStore {
     this.contractAddress = this.tokenDistributionAPI.getContractAddress();
 
     this.watchTransferEvents();
+    this.watchApprovalEvents();
   }
 
   watchTransferEvents = () => {
     this.tokenDistributionAPI.getTransferEvent().watch((error, event) => {
       if (error) {
-        console.log('Watch transfer event error: ', error)
-      } else {
+        console.log('Watch transfer event error: ', error);
+      }
+      else {
         runInAction(() => this.transferEvents = [event, ...this.transferEvents]);
       }
     });
   };
 
-  purchaseTokens = (amount, account) => this.tokenDistributionAPI.purchaseTokens(amount, account, this.contractAddress);
+  watchApprovalEvents = () => {
+    this.tokenDistributionAPI.getApprovalEvent().watch((error, event) => {
+      if (error) {
+        console.log('Watch approval event error: ', error);
+      } else {
+        runInAction(() => this.approvalEvents = [event, ...this.approvalEvents]);
+      }
+    });
+  };
+
+  purchaseTokens = (amount, account) => this.tokenDistributionAPI.purchaseTokens(amount, account);
 
   transferTokens = (value, to, account) => this.tokenDistributionAPI.transferTokens(value, to, account);
+
+  approve = (spender, value, owner) => this.tokenDistributionAPI.approve(spender, value, owner);
 
   @action
   loadTotalSupply = async () => {

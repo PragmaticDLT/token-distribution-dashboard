@@ -5,7 +5,7 @@ import {inject, observer} from 'mobx-react';
 
 import AccountInfo from './components/AccountInfo';
 import BuyTokens from './components/BuyTokens';
-import WithdrawTokens from './components/WithdrawTokens';
+import TransferTokens from './components/TransferTokens';
 import {MetaMaskRemainder, Overlay, Wrapper} from './styles';
 
 @inject('TokenStore')
@@ -40,17 +40,29 @@ export default class SideBar extends React.Component {
     }
   };
 
-  withdrawTokens = (amount, address) => {
+  transferTokens = (amount, recipient) => {
     const TokenStore = this.props.TokenStore;
     const UserDataStore = this.props.UserDataStore;
 
-    if (amount >= 1 && address) {
-      TokenStore.transferTokens(amount, address, UserDataStore.account).then(() => {
+    if (amount >= 1 && recipient) {
+      TokenStore.transferTokens(amount, recipient, UserDataStore.account).then(() => {
         TokenStore.loadTotalSupply();
         UserDataStore.loadBalance();
       }).catch(error => {
-        console.error('Failed to withdraw tokens: ', error);
-        alert('Failed to to withdraw tokens');
+        console.error('Failed to transfer tokens: ', error);
+        alert('Failed to to transfer tokens');
+      });
+    }
+  };
+
+  approveTokensUsage = (spenderAddress, approvedAmount) => {
+    const TokenStore = this.props.TokenStore;
+    const UserDataStore = this.props.UserDataStore;
+
+    if (amount > 1) {
+      TokenStore.approve(spenderAddress, approvedAmount, UserDataStore.account).catch(error => {
+        console.error('Failed to approve tokens spending: ', error);
+        alert('Failed to approve tokens spending');
       });
     }
   };
@@ -74,7 +86,7 @@ export default class SideBar extends React.Component {
             <div>
               <AccountInfo account={UserDataStore.account} balance={UserDataStore.balance}/>
               <BuyTokens buyTokens={this.buyTokens}/>
-              <WithdrawTokens withdrawTokens={this.withdrawTokens}/>
+              <TransferTokens transferTokens={this.transferTokens}/>
             </div>
           )}
         </Wrapper>}
