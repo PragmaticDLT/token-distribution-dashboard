@@ -32,7 +32,7 @@ class TokenStore {
 
   purchaseTokens = (amount, account) => this.tokenDistributionAPI.purchaseTokens(amount, account, this.contractAddress);
 
-  transferTokens = (to, value, account) => this.tokenDistributionAPI.transferTokens(to, value, account);
+  transferTokens = (value, to, account) => this.tokenDistributionAPI.transferTokens(value, to, account);
 
   @action
   loadTotalSupply = async () => {

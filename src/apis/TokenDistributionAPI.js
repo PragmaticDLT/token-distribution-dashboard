@@ -36,7 +36,7 @@ class TokenDistributionAPI {
     })
   );*/
 
-  transferTokens = (to, value, account) => this.tokenDistribution.transfer(to, value, {
+  transferTokens = (value, to, account) => this.tokenDistribution.transfer(to, value, {
     from: account,
     gas: 1000000
   });

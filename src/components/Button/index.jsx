@@ -1,5 +1,6 @@
+'use strict';
+
 import React from "react";
-import { observer, inject } from "mobx-react";
 import { Wrapper } from "./style";
 
 class Button extends React.Component {
