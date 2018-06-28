@@ -6,6 +6,7 @@ import {inject, observer} from 'mobx-react';
 import AccountInfo from './components/AccountInfo';
 import BuyTokens from './components/BuyTokens';
 import TransferTokens from './components/TransferTokens';
+import ApproveTokens from './components/ApproveTokens';
 import {MetaMaskRemainder, Overlay, Wrapper} from './styles';
 
 @inject('TokenStore')
@@ -59,7 +60,7 @@ export default class SideBar extends React.Component {
     const TokenStore = this.props.TokenStore;
     const UserDataStore = this.props.UserDataStore;
 
-    if (amount > 1) {
+    if (approvedAmount > 1) {
       TokenStore.approve(spenderAddress, approvedAmount, UserDataStore.account).catch(error => {
         console.error('Failed to approve tokens spending: ', error);
         alert('Failed to approve tokens spending');
@@ -87,6 +88,7 @@ export default class SideBar extends React.Component {
               <AccountInfo account={UserDataStore.account} balance={UserDataStore.balance}/>
               <BuyTokens buyTokens={this.buyTokens}/>
               <TransferTokens transferTokens={this.transferTokens}/>
+              <ApproveTokens approveTokens={this.approveTokensUsage}/>
             </div>
           )}
         </Wrapper>}
